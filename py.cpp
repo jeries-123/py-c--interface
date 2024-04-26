@@ -6,7 +6,7 @@ int main() {
     // Initialize Python interpreter
     Py_Initialize();
 
-    // Open Python trash detection script file
+   
     std::ifstream scriptFile("trash_detection.py");
     if (!scriptFile.is_open()) {
         std::cerr << "Failed to open Python trash detection script file\n";
@@ -21,9 +21,10 @@ int main() {
     scriptFile.close();
 
     // Run Python trash detection code
-    PyRun_SimpleString(scriptContent.c_str());
+     PyRun_SimpleString("import take_photo\n"
+                       "take_photo.take_photo('photo.jpg')\n");
 
-    // Finalize Python interpreter
+   
     Py_Finalize();
 
     return 0;
