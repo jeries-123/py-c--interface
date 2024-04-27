@@ -6,25 +6,27 @@ int main() {
     // Initialize Python interpreter
     Py_Initialize();
 
-   
-    std::ifstream scriptFile("trash_detection.py");
+    // Add the directory containing take_photo.py to the Python system path
+    PyRun_SimpleString("import sys\n"
+                       "sys.path.append('/home/jeries/Desktop/Project/py-c--interface/')\n");
+
+    // Read the content of the Python script
+    std::ifstream scriptFile("take_photo.py");
     if (!scriptFile.is_open()) {
-        std::cerr << "Failed to open Python trash detection script file\n";
+        std::cerr << "Failed to open Python script file\n";
         return 1;
     }
 
-    // Read the content of the Python script
     std::string scriptContent((std::istreambuf_iterator<char>(scriptFile)),
                               std::istreambuf_iterator<char>());
 
     // Close the file
     scriptFile.close();
 
-    // Run Python trash detection code
-     PyRun_SimpleString("import take_photo\n"
-                       "take_photo.take_photo('photo.jpg')\n");
+    // Run Python script
+    PyRun_SimpleString(scriptContent.c_str());
 
-   
+    // Finalize Python interpreter
     Py_Finalize();
 
     return 0;
